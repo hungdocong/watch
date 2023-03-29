@@ -1,0 +1,97 @@
+﻿
+@using Watch.Models.EF;
+@{
+    ViewBag.Title = "Nhật ký nhập kho";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Nhật ký nhập kho
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-inbox"></i>Quản lý kho</a></li>
+            <li class="active">Nhật ký nhập kho</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-4" style="margin-bottom: 10px">
+                <a class="btn btn-lg btn-primary" href="/Admin/Inward/Add">Nhập kho </a>
+            </div>
+        </div>
+     
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header text-center">
+                        <h3 class="box-title text-uppercase">Nhật ký nhập kho</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        #
+                                    </th>
+                                    <th class="text-center">
+                                        Thông tin đơn nhập
+                                    </th>
+                                    <th class="text-center">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    int dem = 0;
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-center">@dem</td>
+                                            <td class="text-center">
+                                                <p>Tổng số lượng: <b>@item.TotalQuantity</b></p>
+                                                <p>Tổng tiền: <b>@item.TotalAmount.Value.ToString("N0")</b> đ</p>
+                                                <p>Ngày nhập: <b>@item.Createdate.Value.ToString("dd-MM-yyyy")</b></p>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="/admin/inward/inward_detail/@item.ID" class="btn btn-primary">
+                                                    <i class="fa fa-calculator fa-fw" style="padding-right: 10px;"></i>Xem chi tiết
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        dem++;
+
+                                    }
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </section><!-- /.content -->
+</div>
+
+@section jsSection{
+
+    <script>
+        $(function () {
+           
+        });
+
+    </script>
+
+}
+
+

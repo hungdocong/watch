@@ -1,0 +1,318 @@
+﻿
+
+@using Watch.Models.EF;
+@{
+    ViewBag.Title = "Quản lý truy cập";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int dem = 1;
+    var lstPhanQuyen = ViewBag.lstPhanQuyen as List<Role>;
+}
+@model List<Admin>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Danh sách truy cập
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-user"></i>Quản lý tài khoản</a></li>
+            <li class="active">Danh sách truy cập</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            @if (TempData["message"] != null)
+            {
+                <div class="alert @TempData["alert"] text-center" id="AlertBox">
+                    @TempData["message"]
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin-bottom: 10px">
+                <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#add">Thêm mới </button>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center text-uppercase" id="exampleModalLabel">Thêm mới truy cập</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @using (Html.BeginForm("frmAdd", "Login", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmAdd" }))
+                        {
+                            <div class="form-group col-sm-12">
+                                <label for="recipient-name" class="col-form-label">Họ và tên:</label>
+                                <input type="text" name="Fullname" class="form-control" required>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="recipient-name" class="col-form-label">Tên đăng nhập:</label>
+                                <input type="text" name="Account" class="form-control" required>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="recipient-name" class="col-form-label">Mật khẩu:</label>
+                                <input type="password" name="Password" class="form-control" required>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="recipient-name" class="col-form-label">Quyền:</label>
+                                <select class="form-control" name="RoleID">
+                                    @foreach (var item in lstPhanQuyen)
+                                    {
+                                        <option value="@item.RoleID">@item.RoleName</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="recipient-name" class="col-form-label">Hình ảnh:</label>
+                                <label for="imgInp" class="custom-file-upload">
+                                    <i class="fa fa-cloud-upload"></i>
+                                </label>
+                                <input name="Image" type="file" id="imgInp" accept="image/*"> <br>
+                                <img id="blah" src="~/Assets/Client/img/empty.jpg" alt="your image" width="100px" />
+                            </div>
+
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Thêm mới</button>
+                            </div>
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title"></h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="tblData" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Tên truy cập</th>
+                                    <th class="text-center" colspan="2">Thông tin</th>
+                                    <th class="text-center">Quyền truy cập</th>
+                                    <th class="text-center">Trạng thái</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">@dem</td>
+                                        <td class="text-center">@item.Account</td>
+                                        <td><img src="~/Assets/Client/img/admin/@item.Image" width="100px" /></td>
+                                        <td class="text-center">@item.Fullname</td>
+                                        <td class="text-center">
+                                            <select class="form-control changeRole" data-id="@item.ID">
+                                                @foreach (var jtem in lstPhanQuyen)
+                                                {
+                                                    <option value="@(jtem.RoleID == item.RoleID ? "selected" : "")">@jtem.RoleName</option>
+                                                }
+                                            </select>
+                                        </td>
+                                        <td class="text-center">
+                                                @if (item.Status == true)
+                                                {
+                                                    <button class="btn btn-primary btnStatus" data-id="@item.ID" title="Khóa tài khoản">Đang hoạt động</button>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn btn-default btnStatus" data-id="@item.ID" title="Kích hoạt tài khoản">Đã khóa</button>
+                                                }
+                                            </td>
+                                        <td>
+                                            <button class="btn btn-danger btnDelete" data-id="@item.ID" title="Xóa truy cập"><i class="fa fa-remove"></i></button>
+                                        </td>
+                                    </tr>
+                                    dem++;
+                                }
+
+                            </tbody>
+
+                        </table>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </section><!-- /.content -->
+</div>
+
+
+@section jsSection{
+
+    <script>
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                blah.src = URL.createObjectURL(file)
+            }
+        }
+        $(function () {
+            $('#imgInp').change(function () {
+                var i = $(this).prev('label').clone();
+                var file = '<i class="fa fa-cloud-upload"></i>' + $('#imgInp')[0].files[0].name;
+                $(this).prev('label').empty();
+                $(this).prev('label').append(file);
+            });
+
+            $("#tblData").DataTable();
+            //nếu không có thao tác gì thì ẩn đi
+            $('#AlertBox').removeClass('hide');
+
+            //Sau khi hiển thị lên thì delay 1s và cuộn lên trên sử dụng slideup
+            $('#AlertBox').delay(2000).slideUp(500);
+
+            $.validator.addMethod("select_validate", function (value, element, arg) {
+                return arg !== value;
+            }, "Value must not equal arg.");
+
+             jQuery.validator.addMethod("phonenu", function (value, element) {
+                if (/^(09[0-9]|07[0|6|7|8|9]|03[2-9]|08[1-5])+([0-9]{7})\b/g.test(value)) {
+                    return true;
+                } else {
+                    return false;
+                };
+             }, "Invalid phone number");
+
+            $('.btnDelete').off('click').on('click', function () {
+
+                const notice = PNotify.notice({
+                    title: 'Thông báo',
+                    text: 'Bạn thật sự muốn xóa?',
+                    icon: 'fa fa-question-circle',
+                    width: '360px',
+                    minHeight: '110px',
+                    hide: false,
+                    closer: false,
+                    sticker: false,
+                    destroy: true,
+                    stack: new PNotify.Stack({
+                        dir1: 'down',
+                        modal: true,
+                        firstpos1: 25,
+                        overlayClose: false
+                    }),
+                    modules: new Map([
+                        ...PNotify.defaultModules,
+                        [PNotifyConfirm, {
+                            confirm: true
+                        }]
+                    ])
+                });
+
+                notice.on('pnotify:confirm', () =>
+                    $.ajax({
+                        data: { ID: $(this).data('id') },
+                        url: '/Admin/Login/Delete',
+                        dataType: 'Json',
+                        type: 'POST',
+                        success: function (res) {
+                            if (res.status == true) {
+                                PNotify.success({
+                                    title: 'THÔNG BÁO!!',
+                                    text: 'Xóa tài khoản thành công.'
+                                });
+                                setTimeout(function () { window.location.href = "/Admin/Login/Index"; }, 2000);
+
+                            } else {
+                                PNotify.error({
+                                    title: 'THÔNG BÁO!!',
+                                    text: 'Xóa tài khoản KHÔNG thành công.'
+                                });
+                            }
+                        }
+                    })
+
+                );
+
+            });
+
+            // add the rule here
+            $.validator.addMethod("select_validate", function (value, element, arg) {
+                return arg !== value;
+            }, "Value must not equal arg.");
+            //Khi bàn phím được nhấn và thả ra thì sẽ chạy phương thức này
+            $("#frmAdd").validate({
+                rules: {
+                    Fullname: "required",
+                    Account: "required",
+                    Password: "required",
+                    Image: "required",
+                    RoleID: { select_validate: "" }
+                },
+                messages: {
+                    Fullname: "Vui lòng nhập họ và tên",
+                    Account: "Vui lòng nhập tên truy cập",
+                    Password: "Vui lòng nhập mật khẩu",
+                    Image: "Vui lòng chọn hình ảnh",
+                    RoleID: { select_validate: "Bạn chưa chọn phân quyền!" }
+                }
+            });
+
+            $('.changeRole').change(function () {
+                var roleID = this.value;
+                var user_id = $(this).data('id');
+                $.ajax({
+                    data: {
+                        ID: user_id,
+                        RoleID: roleID
+                    },
+                    url: '/Admin/Login/UpdateRole',
+                    dataType: 'Json',
+                    type: 'POST',
+                    success: function () {
+
+                        PNotify.success({
+                            title: 'THÔNG BÁO!!',
+                            text: 'Cập nhật phân quyền thành công.'
+                        });
+
+                        setTimeout(function () { window.location.href = "/admin/login/list"; }, 1000);
+                    }
+                });
+
+            });
+
+            $('.btnStatus').off('click').on('click', function () {
+
+                $.ajax({
+                    data: { ID: $(this).data('id') },
+                    url: '/Admin/Login/changeStatus',
+                    dataType: 'Json',
+                    type: 'POST',
+                    success: function (res) {
+                        if (res.status == true) {
+
+                            PNotify.success({
+                                title: 'THÔNG BÁO!!',
+                                text: 'Cập nhật trạng thái thành công.'
+                            });
+                            setTimeout(function () { window.location.href = "/admin/login/list"; }, 2000);
+                        }
+                    }
+                });
+
+            });
+
+        });
+
+    </script>
+
+}
+
+

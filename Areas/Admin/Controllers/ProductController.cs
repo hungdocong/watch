@@ -1,0 +1,297 @@
+﻿using Newtonsoft.Json;
+using Watch.Models.DTO;
+using Watch.Models.EF;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Computers.Areas.Admin.Controllers
+{
+    public class ProductController : Controller
+    {
+        private WatchEntities db = new WatchEntities();
+        // GET: Admin/Product
+        public ActionResult Index()
+        {
+                var query = db.Products.ToList();
+                ViewBag.lstCategory = db.Categories.ToList();
+                return View(query.OrderByDescending(x => x.ID).ToList());
+        }
+
+        // GET: Admin/Product/Create
+        public ActionResult Add()
+        {
+            ViewBag.lstCategory = db.Categories.ToList();
+            ViewBag.lstBrand = db.Brands.ToList();
+            return View();
+        }
+
+        // POST: Admin/Product/Create
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult frmAdd(Product entity, HttpPostedFileBase Image)
+        {
+            try
+            {
+                long maxid = db.Products.Max(x => x.ID);
+                entity.Product_Code = "PRO" + (maxid + 1).ToString() + DateTime.Now.ToString("ddMMyyyy");
+                entity.Metatitle = Str_Metatitle(entity.Product_Name);
+
+                entity.Quantity = 0;
+                entity.Status = true;
+               
+                //Thêm hình ảnh
+                var path = Path.Combine(Server.MapPath("~/Assets/Client/img/product"), Image.FileName);
+                if (System.IO.File.Exists(path))
+                {
+                    string extensionName = Path.GetExtension(Image.FileName);
+                    string filename = Image.FileName +DateTime.Now.ToString("ddMMyyyy") + extensionName;
+                    path = Path.Combine(Server.MapPath("~/Assets/Client/img/product/"), filename);
+                    Image.SaveAs(path);
+                    entity.Image = filename;
+                }
+                else
+                {
+                    Image.SaveAs(path);
+                    entity.Image = Image.FileName;
+                }
+
+                db.Products.Add(entity);
+                db.SaveChanges();
+                TempData["message"] = "Thêm sản phẩm thành công.";
+                TempData["alert"] = "alert-success";
+
+                return RedirectToAction("Index");
+                
+            }
+            catch
+            {
+                TempData["message"] = "Thêm sản phẩm không thành công.";
+                TempData["alert"] = "alert-danger";
+                return RedirectToAction("Index");
+            }
+        }
+
+        // GET: Admin/Product/Edit/5
+        public ActionResult Edit(long ID)
+        {
+            ViewBag.product = db.Products.Find(ID);
+            ViewBag.lstCategory = db.Categories.ToList();
+            ViewBag.lstBrand = db.Brands.ToList();
+            return View();
+        }
+
+        // POST: Admin/Product/Edit/5
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult frmEdit(Product entity, HttpPostedFileBase Image)
+        {
+            try
+            {
+                var pro = db.Products.Find(entity.ID);
+                pro.Product_Name = entity.Product_Name;
+                pro.Metatitle = Str_Metatitle(entity.Product_Name);
+                pro.Promotion_Price = entity.Promotion_Price;
+                pro.Price = entity.Price;
+                pro.Category_ID = entity.Category_ID;
+                pro.Desription = entity.Desription;
+                pro.Configuration = entity.Configuration;
+                try
+                {
+                    if (pro.Image != Image.FileName)
+                    {
+                        //Xóa file cũ
+                        System.IO.File.Delete(Path.Combine(Server.MapPath("~/Assets/Client/img/product"), pro.Image));
+                        //Thêm hình ảnh
+                        var path = Path.Combine(Server.MapPath("~/Assets/Client/img/product"), Image.FileName);
+                        if (System.IO.File.Exists(path))
+                        {
+                            string extensionName = Path.GetExtension(Image.FileName);
+                            string filename = Image.FileName + DateTime.Now.ToString("ddMMyyyy") + extensionName;
+                            path = Path.Combine(Server.MapPath("~/Assets/Client/img/product/"), filename);
+                            Image.SaveAs(path);
+                            pro.Image = filename;
+                        }
+                        else
+                        {
+                            Image.SaveAs(path);
+                            pro.Image = Image.FileName;
+                        }
+                    }
+                    db.SaveChanges();
+                    TempData["message"] = "Cập nhật sản phẩm thành công.";
+                    TempData["alert"] = "alert-success";
+                    return RedirectToAction("Index");
+                    
+                }
+                catch
+                {
+                    db.SaveChanges();
+                    TempData["message"] = "Cập nhật sản phẩm không thành công.";
+                    TempData["alert"] = "alert-danger";
+                    return RedirectToAction("Index");
+                }
+
+                
+            }
+            catch
+            {
+                TempData["message"] = "Cập nhật sản phẩm không thành công.";
+                TempData["alert"] = "alert-danger";
+                return RedirectToAction("Index");
+            }
+        }
+
+        // GET: Admin/Product/Delete/5
+        public JsonResult Delete(long ID)
+        {
+            try
+            {
+                var product = db.Products.Find(ID);
+                var lstImage = db.Images.Where(x => x.Product_ID == ID).ToList();
+                foreach(var item in lstImage)
+                {
+                    System.IO.File.Delete(Path.Combine(Server.MapPath("~/Assets/Client/img/product-detail"), item.Image1));
+                    db.Images.Remove(item);
+                }
+                System.IO.File.Delete(Path.Combine(Server.MapPath("~/Assets/Client/img/product"), product.Image));
+
+                db.Products.Remove(product);
+                db.SaveChanges();
+                return Json(new
+                {
+                    status = true
+                });
+            }
+            catch
+            {
+                return Json(new
+                {
+                    status = false
+                });
+            }
+            
+        }
+
+        public JsonResult changeStatus(long ID)
+        {
+            var pro = db.Products.Find(ID);
+            if (pro.Status == true)
+                pro.Status = false;
+            else
+                pro.Status = true;
+            db.SaveChanges();
+            return Json(new
+            {
+                status = true
+            });
+        }
+
+
+        public ActionResult Images(long ID)
+        {
+            ViewBag.lstImage = db.Images.Where(x => x.Product_ID == ID).OrderBy(x => x.ID).ToList();
+            ViewBag.Product = db.Products.Find(ID);
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult Upload_Mutil_Image(long Product_ID, HttpPostedFileBase[] images)
+        {
+            //Ensure model state is valid  
+            if (ModelState.IsValid)
+            {   //iterating through multiple file collection   
+                foreach (HttpPostedFileBase file in images)
+                {
+                    var imgs = new Image();
+                    imgs.Product_ID = Product_ID;
+                    var path = Path.Combine(Server.MapPath("~/Assets/Client/img/product-detail"), file.FileName);
+                    if (System.IO.File.Exists(path))
+                    {
+                        string extensionName = Path.GetExtension(file.FileName);
+                        string filename = file.FileName + DateTime.Now.ToString("ddMMyyyy") + extensionName;
+                        path = Path.Combine(Server.MapPath("~/Assets/Client/img/product-detail"), filename);
+                        file.SaveAs(path);
+                        imgs.Image1 = filename;
+                        db.Images.Add(imgs);
+                        db.SaveChanges();
+
+                    }
+                    else
+                    {
+                        file.SaveAs(path);
+                        imgs.Image1 = file.FileName;
+                        db.Images.Add(imgs);
+                        db.SaveChanges();
+                    }
+
+                }
+            }
+            TempData["message"] = "Thêm hình ảnh thành công.";
+            TempData["alert"] = "alert-success";
+            return RedirectToAction("Images", new { ID = Product_ID });
+        }
+
+        public JsonResult Del_Images(long ID)
+        {
+
+            var img = db.Images.Find(ID);
+            System.IO.File.Delete(Path.Combine(Server.MapPath("~/Assets/Client/img/product-detail"), img.Image1));
+            db.Images.Remove(img);
+            db.SaveChanges();
+            return Json(new
+            {
+                status = true
+            });
+
+        }
+
+        //Chuyển tên sản phẩm thành metatitle
+        public string Str_Metatitle(string str)
+        {
+            string[] VietNamChar = new string[]
+            {
+                "aAeEoOuUiIdDyY",
+                "áàạảãâấầậẩẫăắằặẳẵ",
+                "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+                "éèẹẻẽêếềệểễ",
+                "ÉÈẸẺẼÊẾỀỆỂỄ",
+                "óòọỏõôốồộổỗơớờợởỡ",
+                "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+                "úùụủũưứừựửữ",
+                "ÚÙỤỦŨƯỨỪỰỬỮ",
+                "íìịỉĩ",
+                "ÍÌỊỈĨ",
+                "đ",
+                "Đ",
+                "ýỳỵỷỹ",
+                "ÝỲỴỶỸ:/"
+            };
+            //Thay thế và lọc dấu từng char      
+            for (int i = 1; i < VietNamChar.Length; i++)
+            {
+                for (int j = 0; j < VietNamChar[i].Length; j++)
+                {
+                    str = str.Replace(VietNamChar[i][j], VietNamChar[0][i - 1]).Replace("“", string.Empty).Replace("”", string.Empty);
+                    str = str.Replace("\"", string.Empty).Replace("'", string.Empty).Replace("`", string.Empty).Replace(".", string.Empty).Replace(",", string.Empty);
+                    str = str.Replace(".", string.Empty).Replace(",", string.Empty).Replace(";", string.Empty).Replace(":", string.Empty);
+                    str = str.Replace("?", string.Empty).Replace("+", string.Empty);
+                }
+            }
+            string str1 = str.ToLower();
+            string[] name = str1.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            string meta = null;
+            //Thêm dấu '-'
+            foreach (var item in name)
+            {
+                meta = meta + item + "-";
+            }
+            return meta;
+        }
+
+    }
+}

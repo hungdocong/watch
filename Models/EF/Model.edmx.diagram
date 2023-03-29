@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="378753aa933046769559b5a0c539678b" Name="Diagram1">
+        <EntityTypeShape EntityType="WatchModel.Admin" Width="1.5" PointX="6" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.Brand" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.Category" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.Image" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.Inward" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.Inward_Detail" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.Order" Width="1.5" PointX="6" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.Order_Detail" Width="1.5" PointX="8.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.Product" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.Review" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.Role" Width="1.5" PointX="3.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.sysdiagram" Width="1.5" PointX="7.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.User" Width="1.5" PointX="3" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WatchModel.Warranty" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="WatchModel.FK_Admin_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="WatchModel.FK_Warranty_Admin" ManuallyRouted="false" />
+        <AssociationConnector Association="WatchModel.FK_Product_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="WatchModel.FK_Product_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="WatchModel.FK_Image_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="WatchModel.FK_Inward_Detail_Inward" ManuallyRouted="false" />
+        <AssociationConnector Association="WatchModel.FK_Inward_Detail_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="WatchModel.FK_Order_Detail_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="WatchModel.FK_Order_User" ManuallyRouted="false" />
+        <AssociationConnector Association="WatchModel.FK_Order_Detail_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="WatchModel.FK_Review_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="WatchModel.FK_Warranty_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="WatchModel.FK_Review_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
