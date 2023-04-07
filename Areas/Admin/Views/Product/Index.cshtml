@@ -39,15 +39,13 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title"></h3>
-                    </div><!-- /.box-header -->
                     <div class="box-body">
                         <table id="tblData" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center" colspan="2">Thông tin sản phẩm</th>
+                                    <th class="text-center">Hình ảnh</th>
+                                    <th class="text-center">Thông tin sản phẩm</th>
                                     <th class="text-center">Trạng thái</th>
                                     <th></th>
                                 </tr>
@@ -61,7 +59,7 @@
                                         <td class="text-center">
                                             <span><b>@item.Product_Name</b></span>
                                             <p>Danh mục: <b>@item.Category.Name</b></p>
-                                            <p>Giá gốc (đ): <b>@item.Promotion_Price.Value.ToString("N0")</b> @(item.Price != null ? Html.Raw(", Giá Km(đ): <b>" + item.Price.Value.ToString("N0") + "</b>") : Html.Raw("")
+                                            <p>Giá gốc (đ): <b>@item.Promotion_Price.Value.ToString("N0")</b> @(item.Price != null ? Html.Raw(", Giá Km(đ): <b>" + item.Price.Value.ToString("N0") + "</b>") : Html.Raw(""))
                                         </td>
                                         <td class="text-center">
                                             @if (item.Status == true)
@@ -99,7 +97,7 @@
     <script>
         
         $(function () {
-            $('#tblData').DataTable();
+           
             //nếu không có thao tác gì thì ẩn đi
             $('#AlertBox').removeClass('hide');
 
@@ -178,7 +176,12 @@
                 });
 
             });
-
+            $('#tblData').DataTable({
+                "columnDefs": {
+                    "targets": 1,
+                    "orderable": false
+                }
+            });
         });
 
     </script>

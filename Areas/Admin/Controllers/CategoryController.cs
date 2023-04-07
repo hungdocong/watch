@@ -6,15 +6,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using Watch.Models.Business;
 
-namespace Computers.Areas.Admin.Controllers
+namespace Watch.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
         // GET: Admin/Category
         private WatchEntities db = new WatchEntities();
         // GET: Admin/Provider
-        //[CustomRoleProvider(Type = 1)]
+        [CustomRoleProvider(RoleName = new string[] { "Editor", "Admin" })]
         public ActionResult Index()
         {
             var model = db.Categories.OrderByDescending(x => x.ID).ToList();

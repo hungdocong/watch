@@ -6,8 +6,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using Watch.Models.Business;
 
-namespace Computers.Areas.Admin.Controllers
+namespace Watch.Areas.Admin.Controllers
 {
     public class LoginController : Controller
     {
@@ -19,7 +20,7 @@ namespace Computers.Areas.Admin.Controllers
             return View();
         }
 
-
+        [CustomRoleProvider(RoleName = new string[] { "Admin" })]
         public ActionResult List()
         {
             var model = db.Admins.Where(x => x.Account != "admin").OrderByDescending(x => x.ID).ToList();
@@ -123,6 +124,7 @@ namespace Computers.Areas.Admin.Controllers
                     entity.Image = Image.FileName;
                 }
                 //entity.Password = new MD5().Encrypt_MD5(entity.Password);
+                entity.Status = true;
                 db.Admins.Add(entity);
                 db.SaveChanges();
                 TempData["massage"] = "Thêm truy cập thành công";
@@ -175,6 +177,8 @@ namespace Computers.Areas.Admin.Controllers
                 }
 
                 db.SaveChanges();
+
+                Session["admin"] = db.Admins.Find(entity.ID);
                 TempData["message"] = "Cập nhật thông tin thành công";
                 TempData["alert"] = "alert-success";
                 return Redirect("/admin/login/list");

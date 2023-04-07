@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Watch.Models.Business;
 using Watch.Models.EF;
 
 namespace Watch.Areas.Admin.Controllers
@@ -12,6 +13,7 @@ namespace Watch.Areas.Admin.Controllers
     {
         private WatchEntities db = new WatchEntities();
         // GET: Admin/Brand
+        [CustomRoleProvider(RoleName = new string[] { "Editor", "Admin" })]
         public ActionResult Index()
         {
             var model = db.Brands.OrderByDescending(x => x.ID).ToList();

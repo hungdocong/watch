@@ -8,7 +8,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6487D483-42A4-4466-B152-A97F62B2FAF2}</ProjectGuid>
+    <ProjectGuid>{98EBE0F8-5A59-469D-B8CB-1E4DBFF83311}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -18,7 +18,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44380</IISExpressSSLPort>
+    <IISExpressSSLPort>44348</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -141,10 +141,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Business\CustomRoleProvider.cs" />
     <Compile Include="Models\Business\InwardBusiness.cs" />
     <Compile Include="Models\Business\OrderBusiness.cs" />
     <Compile Include="Models\Business\ProductBusiness.cs" />
     <Compile Include="Models\DTO\CartDTO.cs" />
+    <Compile Include="Models\DTO\Order_DetailDTO.cs" />
     <Compile Include="Models\DTO\TotalSale.cs" />
     <Compile Include="Models\DTO\UserDTO.cs" />
     <Compile Include="Models\EF\Admin.cs">
@@ -1495,7 +1497,235 @@
     <Content Include="Assets\Admin\plugins\timepicker\bootstrap-timepicker.js" />
     <Content Include="Assets\Admin\plugins\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Assets\Admin\plugins\timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="Assets\Client\css\AjaxLoader.html" />
+    <Content Include="Assets\Client\css\animate.css" />
+    <Content Include="Assets\Client\css\bootstrap.min.css" />
+    <Content Include="Assets\Client\css\fancybox\blank.gif" />
+    <Content Include="Assets\Client\css\fancybox\fancybox_loading.gif" />
+    <Content Include="Assets\Client\css\fancybox\fancybox_overlay.png" />
+    <Content Include="Assets\Client\css\fancybox\fancybox_sprite.png" />
+    <Content Include="Assets\Client\css\fancybox_loading%402x.html" />
+    <Content Include="Assets\Client\css\fancybox_sprite%402x.html" />
+    <Content Include="Assets\Client\css\font-awesome.min.css" />
+    <Content Include="Assets\Client\css\ie.css" />
+    <Content Include="Assets\Client\css\images\animated-overlay.html" />
+    <Content Include="Assets\Client\css\images\ui-bg_diagonals-thick_18_b81900_40x40.html" />
+    <Content Include="Assets\Client\css\images\ui-bg_diagonals-thick_20_666666_40x40.html" />
+    <Content Include="Assets\Client\css\images\ui-bg_flat_10_000000_40x100.html" />
+    <Content Include="Assets\Client\css\images\ui-bg_glass_100_f6f6f6_1x400.html" />
+    <Content Include="Assets\Client\css\images\ui-bg_glass_100_fdf5ce_1x400.html" />
+    <Content Include="Assets\Client\css\images\ui-bg_glass_65_ffffff_1x400.html" />
+    <Content Include="Assets\Client\css\images\ui-bg_gloss-wave_35_f6a828_500x100.html" />
+    <Content Include="Assets\Client\css\images\ui-bg_highlight-soft_100_eeeeee_1x100.html" />
+    <Content Include="Assets\Client\css\images\ui-bg_highlight-soft_75_ffe45c_1x100.html" />
+    <Content Include="Assets\Client\css\images\ui-icons_222222_256x240.html" />
+    <Content Include="Assets\Client\css\images\ui-icons_228ef1_256x240.html" />
+    <Content Include="Assets\Client\css\images\ui-icons_ef8c08_256x240.html" />
+    <Content Include="Assets\Client\css\images\ui-icons_ffd27a_256x240.html" />
+    <Content Include="Assets\Client\css\images\ui-icons_ffffff_256x240.html" />
+    <Content Include="Assets\Client\css\jquery-ui-slider.css" />
+    <Content Include="Assets\Client\css\jquery.bxslider.css" />
+    <Content Include="Assets\Client\css\jquery.fancybox.css" />
+    <Content Include="Assets\Client\css\main.css" />
+    <Content Include="Assets\Client\css\meanmenu.min.css" />
+    <Content Include="Assets\Client\css\nivo-slider.css" />
+    <Content Include="Assets\Client\css\normalize.css" />
+    <Content Include="Assets\Client\css\owl.carousel.css" />
+    <Content Include="Assets\Client\css\owl.theme.css" />
+    <Content Include="Assets\Client\css\responsive.css" />
+    <Content Include="Assets\Client\fonts\fontawesome-webfonte0a5.svg" />
+    <Content Include="Assets\Client\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Assets\Client\img\admin\default-avatar.png" />
+    <Content Include="Assets\Client\img\brand\ag_logo.png" />
+    <Content Include="Assets\Client\img\brand\at_logo.png" />
+    <Content Include="Assets\Client\img\brand\casio_logo.png" />
+    <Content Include="Assets\Client\img\brand\dm_logo.png" />
+    <Content Include="Assets\Client\img\brand\ep_logo.png" />
+    <Content Include="Assets\Client\img\brand\jl_logo.png" />
+    <Content Include="Assets\Client\img\brand\pa_logo.png" />
     <Content Include="Assets\Client\img\empty.jpg" />
+    <Content Include="Assets\Client\img\favicon.png" />
+    <Content Include="Assets\Client\img\logo.png" />
+    <Content Include="Assets\Client\img\logo2.png" />
+    <Content Include="Assets\Client\img\order-step-a.png" />
+    <Content Include="Assets\Client\img\order-step-current.png" />
+    <Content Include="Assets\Client\img\product-detail\1019529643_dong-ho-thuy-sy-phien-ban-gioi-han7.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1055207721_dong-ho-ho24.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1089703019_dong-ho-chinh-hang-42-3E.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1137667559_dong-ho-thuy-sy-phien-ban-gioi-han3 %281%29.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1137667559_dong-ho-thuy-sy-phien-ban-gioi-han3.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1137667559_dong-ho-thuy-sy-phien-ban-gioi-han3.jpg03042023.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1186884103_dong-ho-thuy-sy-phien-ban-gioi-han29.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1199912921_donghothuysy17.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1238920118_dong ho chinh hang %281%29.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1241066006_dong-ho-chinh-hang16.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1252643092_dong-ho-chinh-hang15.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1253683284_dong-ho-chính-hang-3.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1266015423_dong-ho-thuy-sy3.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1287337607_j13.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1292605000_dong_ho_co_9005A-RG_S_2.jpg" />
+    <Content Include="Assets\Client\img\product-detail\130545885_donghothoitrang6.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1307546344_donghonuthuysy6.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1319636476_DONG-HO-CHINH-HANG-5.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1323768024_dong-ho-chinh-hang12.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1334090572_donghothoitrang7.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1334292412_dong_ho_nu_jl_1_1851zcjpg_1622368493 %281%29.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1334292412_dong_ho_nu_jl_1_1851zcjpg_1622368493.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1351416775_donghothoitrang3.jpg" />
+    <Content Include="Assets\Client\img\product-detail\138276080_dong-ho-nu-thoi-trang4.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1402686835_DONG-HO-CHINH-HANG-6.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1413324572_dong-ho-nhap-khau37.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1447070319_donghothuysy.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1474483890_dong-ho-thuy-sy-phien-ban-gioi-han14.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1484739335_dong-ho-nu34.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1527401679_dong-ho-nu11.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1537953467_ep02.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1550466741_donghonuthuysy4.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1574847530_donghothoitrang10.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1596357004_1082902518_donghonhapkhau21.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1612812808_dong-ho-co-thuy-sy-phien-ban-gioi-han7.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1623252733_L5033ZG-W_5_1024x1024.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1637158092_241571475_1083070878_donghocochinhang65.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1638678783_dong-ho-chinh-hang4.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1640958671_dong-ho-thuy-sy5.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1671800921_donghothuysy20.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1680920657_194864047_985534601_donghonhapkhau36.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1696626969_dong-ho-thuy-sy-phien-ban-gioi-han5.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1696626969_dong-ho-thuy-sy-phien-ban-gioi-han5.jpg03042023.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1709591781_dong-ho-chihh-hang-15.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1714333760_CA-EFV-570D-7AVUDF_2.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1732474484_dong-ho-nu-thoi-trang3.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1750836446_dong-ho-nu-thuy-sy32 %281%29.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1750836446_dong-ho-nu-thuy-sy32.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1771919271_dong-ho-thuy-sy-phien-ban-gioi-han44.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1775973215_donghonhapkhau24.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1791508155_dong-ho-ho13.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1791747396_DONG-HO-CHINH-HANG-19.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1797814438_donghonunhapkhau5.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1842880618_dong-ho-thuy-sy-phien-ban-gioi-han31.jpg" />
+    <Content Include="Assets\Client\img\product-detail\185720491_dong-ho-ho12.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1874911582_dong-ho-diamond-d-DM63055.jpg" />
+    <Content Include="Assets\Client\img\product-detail\190686064_312166623_dong-ho-co-chinh-hang5.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1910097430_donghonhapkhauuw6.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1974809275_CA-EFV-570D-7AVUDF.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1978985019_dong-ho-nu-thuy-sy33.jpg" />
+    <Content Include="Assets\Client\img\product-detail\1997951770_dong-ho-chinh-hang14.jpg" />
+    <Content Include="Assets\Client\img\product-detail\2018877954_dong-ho-nhap-khau28.jpg" />
+    <Content Include="Assets\Client\img\product-detail\2032615774_dong-ho-thuy-sy2.jpg" />
+    <Content Include="Assets\Client\img\product-detail\2057468169_donghothoitrang9.jpg" />
+    <Content Include="Assets\Client\img\product-detail\2113310661_dong-ho-thuy-sy-phien-ban-gioi-han27.jpg" />
+    <Content Include="Assets\Client\img\product-detail\2127487811_dong-ho-diamond-d-DM5308B5IG.jpg" />
+    <Content Include="Assets\Client\img\product-detail\214860397_L5033ZG-W_4_1024x1024.jpg" />
+    <Content Include="Assets\Client\img\product-detail\22088366_donghonhapkhau23.jpg" />
+    <Content Include="Assets\Client\img\product-detail\224679345_1634902170_dong-ho-chinh-hang6.jpg" />
+    <Content Include="Assets\Client\img\product-detail\253501566_dong ho chinh hang %283%29.jpg" />
+    <Content Include="Assets\Client\img\product-detail\25922660_dong-ho-nu-thoi-trang3.jpg" />
+    <Content Include="Assets\Client\img\product-detail\27488879_CA-EFV-570D-7AVUDF_1.jpg" />
+    <Content Include="Assets\Client\img\product-detail\292303142_donghothoitrang5.jpg" />
+    <Content Include="Assets\Client\img\product-detail\310239543_dong-ho-thuy-sy-phien-ban-gioi-han46.jpg" />
+    <Content Include="Assets\Client\img\product-detail\371131632_dong-ho-thuy-sy-phien-ban-gioi-han26.jpg" />
+    <Content Include="Assets\Client\img\product-detail\380840397_DONG-HO-CHINH-HANG-13.jpg" />
+    <Content Include="Assets\Client\img\product-detail\393429975_dong-ho-nu-thuy-sy12 %281%29.jpg" />
+    <Content Include="Assets\Client\img\product-detail\394795012_dong-ho-chinh-hang10.jpg" />
+    <Content Include="Assets\Client\img\product-detail\431928783_718345550_DONG-HO-CHINH-HANG-5.jpg" />
+    <Content Include="Assets\Client\img\product-detail\470316711_dong-ho-chinh-hang-25.jpg" />
+    <Content Include="Assets\Client\img\product-detail\491318440_L5033ZG-W_3_1024x1024.jpg" />
+    <Content Include="Assets\Client\img\product-detail\517683059_donghonhapkhau206 %281%29.jpg" />
+    <Content Include="Assets\Client\img\product-detail\517683059_donghonhapkhau206.jpg" />
+    <Content Include="Assets\Client\img\product-detail\520519180_dong-ho-thuy-sy-phien-ban-gioi-han43.jpg" />
+    <Content Include="Assets\Client\img\product-detail\522851319_dong-ho-thuy-sy-phien-ban-gioi-han6.jpg" />
+    <Content Include="Assets\Client\img\product-detail\522851319_dong-ho-thuy-sy-phien-ban-gioi-han6.jpg03042023.jpg" />
+    <Content Include="Assets\Client\img\product-detail\543046958_ep04.jpg" />
+    <Content Include="Assets\Client\img\product-detail\561565145_dong-ho-thuy-sy-phien-ban-gioi-han25.jpg" />
+    <Content Include="Assets\Client\img\product-detail\567552303_donghonuthuysy2.jpg" />
+    <Content Include="Assets\Client\img\product-detail\580058978_đòng-hồ-chính-hãng-26.jpg" />
+    <Content Include="Assets\Client\img\product-detail\618042058_donghonhapkhau101.jpg" />
+    <Content Include="Assets\Client\img\product-detail\623356615_dong-ho-thuy-sy1.jpg" />
+    <Content Include="Assets\Client\img\product-detail\640443591_dong-ho-co-thuy-sy-phien-ban-gioi-han3.jpg" />
+    <Content Include="Assets\Client\img\product-detail\651044771_DONG-HO-CHINH-HANG-2.jpg" />
+    <Content Include="Assets\Client\img\product-detail\666019768_Untitled-61.jpg" />
+    <Content Include="Assets\Client\img\product-detail\666255864_408280792_dong-ho-diamond-d-DM36285RG.jpg" />
+    <Content Include="Assets\Client\img\product-detail\668442342_donghochinhhang7.jpg" />
+    <Content Include="Assets\Client\img\product-detail\672727441_dong-ho-nhap-khau27.jpg" />
+    <Content Include="Assets\Client\img\product-detail\687468545_dong-ho-co-thuy-sy-phien-ban-gioi-han4.jpg" />
+    <Content Include="Assets\Client\img\product-detail\688219467_dong-ho-thuy-sy-phien-ban-gioi-han21.jpg" />
+    <Content Include="Assets\Client\img\product-detail\68832148_ep03.jpg" />
+    <Content Include="Assets\Client\img\product-detail\688618964_dong ho chinh hang %284%29.jpg" />
+    <Content Include="Assets\Client\img\product-detail\698784174_donghonuthuysy5.jpg" />
+    <Content Include="Assets\Client\img\product-detail\699829910_donghonhapkhau42.jpg" />
+    <Content Include="Assets\Client\img\product-detail\700436709_DONG-HO-CHINH-HANG-10.jpg" />
+    <Content Include="Assets\Client\img\product-detail\742713732_dong-ho-thuy-sy2.jpg" />
+    <Content Include="Assets\Client\img\product-detail\780673905_donghonudayda.jpg" />
+    <Content Include="Assets\Client\img\product-detail\78400045_dong ho chinh hang.jpg" />
+    <Content Include="Assets\Client\img\product-detail\793113507_dong-ho-thuy-sy-phien-ban-gioi-han26.jpg" />
+    <Content Include="Assets\Client\img\product-detail\845332501_DONG-HO-CHINH-HANG-12.jpg" />
+    <Content Include="Assets\Client\img\product-detail\853669641_dong-ho-chinh-hang-23.jpg" />
+    <Content Include="Assets\Client\img\product-detail\856774639_dong-ho-chinh-hang6 %281%29.jpg" />
+    <Content Include="Assets\Client\img\product-detail\856774639_dong-ho-chinh-hang6.jpg" />
+    <Content Include="Assets\Client\img\product-detail\882852762_dong-ho-ho21.jpg" />
+    <Content Include="Assets\Client\img\product-detail\884627304_dong-ho-nhap-khau34.jpg" />
+    <Content Include="Assets\Client\img\product-detail\909750686_dong-ho-nu-thuy-sy6.jpg" />
+    <Content Include="Assets\Client\img\product-detail\916613170_dong-ho-thuy-sy-phien-ban-gioi-han19.jpg" />
+    <Content Include="Assets\Client\img\product-detail\917332993_donghonhapkhau26.jpg" />
+    <Content Include="Assets\Client\img\product-detail\923897287_dong-ho-thuy-sy-phien-ban-gioi-han45.jpg" />
+    <Content Include="Assets\Client\img\product-detail\943713837_dong-ho-chinh-hang-24.jpg" />
+    <Content Include="Assets\Client\img\product-detail\954447359_donghothuysy16.jpg" />
+    <Content Include="Assets\Client\img\product-detail\965056285_donghothuysy18.jpg" />
+    <Content Include="Assets\Client\img\product-detail\974268866_donghophienbangioihan2.jpg" />
+    <Content Include="Assets\Client\img\product-detail\dong-ho-chinh-hang13-1903062639.jpg" />
+    <Content Include="Assets\Client\img\product-detail\dong-ho-nu-thoi-trang-621305513 %282%29.jpg" />
+    <Content Include="Assets\Client\img\product-detail\dong-ho-nu-thoi-trang-621305513.jpg" />
+    <Content Include="Assets\Client\img\product-detail\dong-ho-nu-thoi-trang4-1366836832.jpg" />
+    <Content Include="Assets\Client\img\product-detail\edifice_casio_ca_efr_526l_7avudfjpg_1628060035-1069288298.jpg" />
+    <Content Include="Assets\Client\img\product-detail\edifice_casio_ca_efr_526l_7avudfjpg_1628060035-1600867818.jpg" />
+    <Content Include="Assets\Client\img\product-detail\edifice_casio_ca_efr_526l_7avudfjpg_1628060035-852295469.jpg" />
+    <Content Include="Assets\Client\img\product\1247431462_dong-ho-nhap-khau1.jpg" />
+    <Content Include="Assets\Client\img\product\1253683284_dong-ho-chính-hang-3.jpg" />
+    <Content Include="Assets\Client\img\product\1287337607_j13.jpg" />
+    <Content Include="Assets\Client\img\product\1334090572_donghothoitrang7.jpg" />
+    <Content Include="Assets\Client\img\product\1334292412_dong_ho_nu_jl_1_1851zcjpg_1622368493.jpg" />
+    <Content Include="Assets\Client\img\product\1367739457_DONG-HO-CHINH-HANG-2.jpg" />
+    <Content Include="Assets\Client\img\product\1484739335_dong-ho-nu34.jpg" />
+    <Content Include="Assets\Client\img\product\1549887336_Untitled-3.jpg" />
+    <Content Include="Assets\Client\img\product\1562192727_dong-ho-chinh-hang47.jpg" />
+    <Content Include="Assets\Client\img\product\1571926121_donghonuthuysy15.jpg" />
+    <Content Include="Assets\Client\img\product\1574847530_donghothoitrang10.jpg" />
+    <Content Include="Assets\Client\img\product\1680920657_194864047_985534601_donghonhapkhau36.jpg" />
+    <Content Include="Assets\Client\img\product\172437906_donghonuthuysy1.jpg" />
+    <Content Include="Assets\Client\img\product\190686064_312166623_dong-ho-co-chinh-hang5.jpg" />
+    <Content Include="Assets\Client\img\product\1974809275_CA-EFV-570D-7AVUDF.jpg" />
+    <Content Include="Assets\Client\img\product\2138888071_donghochinhhang18.jpg" />
+    <Content Include="Assets\Client\img\product\224679345_1634902170_dong-ho-chinh-hang6.jpg" />
+    <Content Include="Assets\Client\img\product\324257325_DONG-HO-CHINH-HANG-1-719521110.jpg" />
+    <Content Include="Assets\Client\img\product\393429975_dong-ho-nu-thuy-sy12.jpg" />
+    <Content Include="Assets\Client\img\product\467105116_dong ho thuy sy phien ban gioi han %289%29.jpg" />
+    <Content Include="Assets\Client\img\product\479629756_CA-EFV-550D-2AVUDF.jpg" />
+    <Content Include="Assets\Client\img\product\517683059_donghonhapkhau206 %281%29.jpg" />
+    <Content Include="Assets\Client\img\product\623356615_dong-ho-thuy-sy1.jpg" />
+    <Content Include="Assets\Client\img\product\652223491_dong ho thuy sy phien ban gioi han.jpg" />
+    <Content Include="Assets\Client\img\product\683470625_dong-ho-nu-thuy-sy38.jpg" />
+    <Content Include="Assets\Client\img\product\772741148_dong-ho-co-thuy-sy-phien-ban-gioi-han.jpg" />
+    <Content Include="Assets\Client\img\product\954447359_donghothuysy16.jpg" />
+    <Content Include="Assets\Client\img\product\974268866_donghophienbangioihan2.jpg" />
+    <Content Include="Assets\Client\img\product\bkg_product_tab.jpg" />
+    <Content Include="Assets\Client\img\product\dong-ho-chinh-hang13-1903062639.jpg" />
+    <Content Include="Assets\Client\img\product\dong-ho-ho20-1810769538.jpg" />
+    <Content Include="Assets\Client\img\product\dong-ho-nu-thoi-trang-621305513.jpg" />
+    <Content Include="Assets\Client\img\product\dong-ho-thuy-sy-phien-ban-gioi-han-AT-528514425-1121260901.jpg" />
+    <Content Include="Assets\Client\img\product\edifice_casio_ca_efr_526l_7avudfjpg_1628060035-1600867818.jpg" />
+    <Content Include="Assets\Client\img\product\edifice_casio_ca_efr_526l_7avudfjpg_1628060035-852295469.jpg" />
+    <Content Include="Assets\Client\js\bootstrap.min.js" />
+    <Content Include="Assets\Client\js\jquery.bxslider.min.js" />
+    <Content Include="Assets\Client\js\jquery.fancybox.js" />
+    <Content Include="Assets\Client\js\jquery.meanmenu.js" />
+    <Content Include="Assets\Client\js\jquery.nivo.slider.js" />
+    <Content Include="Assets\Client\js\jqueryui.js" />
+    <Content Include="Assets\Client\js\main.js" />
+    <Content Include="Assets\Client\js\owl.carousel.min.js" />
+    <Content Include="Assets\Client\js\vendor\jquery-1.11.3.min.js" />
+    <Content Include="Assets\Client\js\vendor\modernizr-2.6.2.min.js" />
+    <Content Include="Assets\Client\js\wow.js" />
+    <Content Include="Assets\Client\style.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1506,8 +1736,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\EF\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.Context.cs</LastGenOutput>
+      <DependentUpon>Model.edmx</DependentUpon>
     </Content>
     <Content Include="Models\EF\Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1601,6 +1831,21 @@
     <Content Include="Assets\Admin\build\less\timeline.less" />
     <Content Include="Assets\Admin\build\less\users-list.less" />
     <Content Include="Assets\Admin\build\less\variables.less" />
+    <Content Include="Assets\Admin\ckeditor\CHANGES.md" />
+    <Content Include="Assets\Admin\ckeditor\LICENSE.md" />
+    <Content Include="Assets\Admin\ckeditor\plugins\scayt\CHANGELOG.md" />
+    <Content Include="Assets\Admin\ckeditor\plugins\scayt\LICENSE.md" />
+    <Content Include="Assets\Admin\ckeditor\plugins\scayt\README.md" />
+    <Content Include="Assets\Admin\ckeditor\plugins\wsc\LICENSE.md" />
+    <Content Include="Assets\Admin\ckeditor\plugins\wsc\README.md" />
+    <Content Include="Assets\Admin\ckeditor\README.md" />
+    <Content Include="Assets\Admin\ckeditor\samples\old\htmlwriter\assets\outputforflash\outputforflash.fla" />
+    <Content Include="Assets\Admin\ckeditor\samples\toolbarconfigurator\font\config.json" />
+    <Content Include="Assets\Admin\ckeditor\samples\toolbarconfigurator\font\fontello.eot" />
+    <Content Include="Assets\Admin\ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
+    <Content Include="Assets\Admin\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
+    <Content Include="Assets\Admin\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
+    <Content Include="Assets\Admin\ckeditor\skins\moono-lisa\readme.md" />
     <Content Include="Assets\Admin\dist\img\credit\Thumbs.db" />
     <Content Include="Assets\Admin\dist\img\Thumbs.db" />
     <Content Include="Assets\Admin\plugins\ckeditor5\ckeditor.js.map" />
@@ -1626,22 +1871,43 @@
     <Content Include="Assets\Admin\plugins\datatables\extensions\TableTools\Readme.md" />
     <Content Include="Assets\Admin\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Assets\Admin\plugins\input-mask\phone-codes\phone-codes.json" />
-    <Content Include="Assets\Admin\ckeditor\CHANGES.md" />
-    <Content Include="Assets\Admin\ckeditor\LICENSE.md" />
-    <Content Include="Assets\Admin\ckeditor\plugins\scayt\CHANGELOG.md" />
-    <Content Include="Assets\Admin\ckeditor\plugins\scayt\LICENSE.md" />
-    <Content Include="Assets\Admin\ckeditor\plugins\scayt\README.md" />
-    <Content Include="Assets\Admin\ckeditor\plugins\wsc\LICENSE.md" />
-    <Content Include="Assets\Admin\ckeditor\plugins\wsc\README.md" />
-    <Content Include="Assets\Admin\ckeditor\README.md" />
-    <Content Include="Assets\Admin\ckeditor\samples\old\htmlwriter\assets\outputforflash\outputforflash.fla" />
-    <Content Include="Assets\Admin\ckeditor\samples\toolbarconfigurator\font\config.json" />
-    <Content Include="Assets\Admin\ckeditor\samples\toolbarconfigurator\font\fontello.eot" />
-    <Content Include="Assets\Admin\ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
-    <Content Include="Assets\Admin\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
-    <Content Include="Assets\Admin\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
-    <Content Include="Assets\Admin\ckeditor\skins\moono-lisa\readme.md" />
+    <Content Include="Assets\Client\css\Baobinh.net.url" />
+    <Content Include="Assets\Client\css\fancybox\Baobinh.net.url" />
+    <Content Include="Assets\Client\css\images\Baobinh.net.url" />
+    <Content Include="Assets\Client\fonts\Baobinh.net.url" />
+    <Content Include="Assets\Client\fonts\fontawesome-webfontd41d.eot" />
+    <Content Include="Assets\Client\fonts\fontawesome-webfonte0a5.eot" />
+    <Content Include="Assets\Client\fonts\fontawesome-webfonte0a5.ttf" />
+    <Content Include="Assets\Client\fonts\fontawesome-webfonte0a5.woff" />
+    <Content Include="Assets\Client\fonts\fontawesome-webfonte0a5.woff2" />
+    <Content Include="Assets\Client\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Assets\Client\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Assets\Client\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Assets\Client\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Assets\Client\fonts\glyphicons-halflings-regulard41d.eot" />
+    <Content Include="Assets\Client\js\Baobinh.net.url" />
+    <Content Include="Assets\Client\js\vendor\Baobinh.net.url" />
     <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Brand\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Inward\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Inward\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Inward\Inward_Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\ChangePass.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\Update.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\CancerOrder.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\OrderDelivering.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Order_Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\WaitAccept.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Images.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <EntityDeploy Include="Models\EF\Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -1650,25 +1916,7 @@
     <Content Include="Models\EF\Model.edmx.diagram">
       <DependentUpon>Model.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Brand\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Login\List.cshtml" />
-    <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Login\ChangePass.cshtml" />
-    <Content Include="Areas\Admin\Views\Login\Update.cshtml" />
-    <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Order\WaitAccept.cshtml" />
-    <Content Include="Areas\Admin\Views\Order\CancerOrder.cshtml" />
-    <Content Include="Areas\Admin\Views\Order\OrderDelivering.cshtml" />
-    <Content Include="Areas\Admin\Views\Order\Order_Detail.cshtml" />
-    <Content Include="Areas\Admin\Views\Inward\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Inward\Add.cshtml" />
-    <Content Include="Areas\Admin\Views\Inward\Inward_Detail.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Add.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Images.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Error.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1691,17 +1939,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Assets\Client\img\admin\" />
-    <Folder Include="Assets\Client\img\brand\" />
-    <Folder Include="Assets\Client\img\product-detail\" />
-    <Folder Include="Assets\Client\img\product\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -1735,9 +1977,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49677</DevelopmentServerPort>
+          <DevelopmentServerPort>52876</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44380/</IISUrl>
+          <IISUrl>https://localhost:44348/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

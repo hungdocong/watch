@@ -33,11 +33,11 @@ namespace Watch.Models.EF
         public Nullable<decimal> Price { get; set; }
         public string Image { get; set; }
         public string Desription { get; set; }
+        public string Configuration { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<long> Category_ID { get; set; }
         public Nullable<long> Brand_ID { get; set; }
         public Nullable<bool> Status { get; set; }
-        public string Configuration { get; set; }
     
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }

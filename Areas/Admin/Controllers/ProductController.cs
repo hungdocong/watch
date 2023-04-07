@@ -7,13 +7,15 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Watch.Models.Business;
 
-namespace Computers.Areas.Admin.Controllers
+namespace Watch.Areas.Admin.Controllers
 {
     public class ProductController : Controller
     {
         private WatchEntities db = new WatchEntities();
         // GET: Admin/Product
+        [CustomRoleProvider(RoleName = new string[] { "Staff", "Admin" })]
         public ActionResult Index()
         {
                 var query = db.Products.ToList();
@@ -21,6 +23,7 @@ namespace Computers.Areas.Admin.Controllers
                 return View(query.OrderByDescending(x => x.ID).ToList());
         }
 
+        [CustomRoleProvider(RoleName = new string[] { "Staff", "Admin" })]
         // GET: Admin/Product/Create
         public ActionResult Add()
         {
@@ -36,7 +39,7 @@ namespace Computers.Areas.Admin.Controllers
         {
             try
             {
-                long maxid = db.Products.Max(x => x.ID);
+                long maxid = (db.Products.Count() > 0 ? db.Products.Max(x => x.ID) : 0);
                 entity.Product_Code = "PRO" + (maxid + 1).ToString() + DateTime.Now.ToString("ddMMyyyy");
                 entity.Metatitle = Str_Metatitle(entity.Product_Name);
 
@@ -76,6 +79,7 @@ namespace Computers.Areas.Admin.Controllers
         }
 
         // GET: Admin/Product/Edit/5
+        [CustomRoleProvider(RoleName = new string[] { "Staff", "Admin" })]
         public ActionResult Edit(long ID)
         {
             ViewBag.product = db.Products.Find(ID);
@@ -101,7 +105,7 @@ namespace Computers.Areas.Admin.Controllers
                 pro.Configuration = entity.Configuration;
                 try
                 {
-                    if (pro.Image != Image.FileName)
+                    if (Image != null && pro.Image != Image.FileName)
                     {
                         //Xóa file cũ
                         System.IO.File.Delete(Path.Combine(Server.MapPath("~/Assets/Client/img/product"), pro.Image));
@@ -240,7 +244,8 @@ namespace Computers.Areas.Admin.Controllers
         {
 
             var img = db.Images.Find(ID);
-            System.IO.File.Delete(Path.Combine(Server.MapPath("~/Assets/Client/img/product-detail"), img.Image1));
+            if(img.Image1 != null)
+                System.IO.File.Delete(Path.Combine(Server.MapPath("~/Assets/Client/img/product-detail"), img.Image1));
             db.Images.Remove(img);
             db.SaveChanges();
             return Json(new

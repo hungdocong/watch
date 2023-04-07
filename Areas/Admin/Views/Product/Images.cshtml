@@ -34,7 +34,7 @@
                 <div class="box box-info">
                     <div class="box-header">
                         <h3 class="box-title">
-                            Hình ảnh sản phâm: <b>@product.Product_Name</b><br>
+                            Hình ảnh sản phẩm: <b>@product.Product_Name</b><br>
                         </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body pad">
@@ -47,7 +47,7 @@
                                     <i class="fa fa-cloud-upload"></i> Chọn 1 hoặc nhiều hình ảnh
                                 </label>
                                 <label for="file_upload" class="btn-image">Chọn ảnh</label>
-                                <input id="file_upload" name="images[]" type="file" style="display: none;" multiple accept="image/*">
+                                <input id="file_upload" name="images" type="file" style="display: none;" multiple accept="image/*">
                                 <br>
                             </div>
                             <div class="form-group text-center">
@@ -69,7 +69,7 @@
                                 foreach (var item in lstImage)
                                 {
                                     <div class="box_image">
-                                        <img src="~/Assets/Client/img/product-detail/@item.Image1" class="picture-box" data-action="zoom">
+                                        <img src="~/Assets/Client/img/product-detail/@item.Image1" class="picture-box">
                                         <div class="wrap-btn-delete"><span data-id="@item.ID" data-proid="@product.ID" class="btn-delete-image">x</span></div>
                                     </div>
                                 }

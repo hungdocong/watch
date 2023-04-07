@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Watch.Models.DTO;
 using Watch.Models.EF;
 
 namespace Watch.Models.Business
@@ -29,27 +30,27 @@ namespace Watch.Models.Business
         }
 
         //Lấy điểm đánh giá trung bình
-        public List<ProductDTO> getRateAverage()
-        {
-            var lstReview = db.Reviews.ToList();
-            var lstProduct = new List<ProductDTO>();
+        //public List<ProductDTO> getRateAverage()
+        //{
+        //    var lstReview = db.Reviews.ToList();
+        //    var lstProduct = new List<ProductDTO>();
 
-            int? SumRate = 0;
+        //    int? SumRate = 0;
 
-            int count = 0;
-            foreach (var item in lstReview)
-            {
-                var pro = new ProductDTO();
-                pro.ID = (long)item.Product_ID;
-                pro.CountReview = db.Reviews.Count(x => x.Product_ID == item.Product_ID);
-                count = db.Reviews.Count(x => x.Product_ID == item.Product_ID);
-                SumRate = db.Reviews.Where(x => x.Product_ID == item.Product_ID).Sum(x => x.Rating);
-                pro.Rate_Average = System.Math.Round((double)SumRate / (double)count, 2);
-                lstProduct.Add(pro);
-            }
+        //    int count = 0;
+        //    foreach (var item in lstReview)
+        //    {
+        //        var pro = new ProductDTO();
+        //        pro.ID = (long)item.Product_ID;
+        //        pro.CountReview = db.Reviews.Count(x => x.Product_ID == item.Product_ID);
+        //        count = db.Reviews.Count(x => x.Product_ID == item.Product_ID);
+        //        SumRate = db.Reviews.Where(x => x.Product_ID == item.Product_ID).Sum(x => x.Rating);
+        //        pro.Rate_Average = System.Math.Round((double)SumRate / (double)count, 2);
+        //        lstProduct.Add(pro);
+        //    }
 
-            return lstProduct;
-        }
+        //    return lstProduct;
+        //}
 
 
         //Cộng tồn kho
@@ -136,80 +137,80 @@ namespace Watch.Models.Business
 
 
         //Lấy danh mục sp ngẫu nhiên
-        public List<ProductDTO> getParentCategory()
-        {
-            var lst_id = db.ParentCategories.Select(x => x.ID).ToArray();
-            var lst_pro = new List<ProductDTO>();
-            var lst_parent = new List<long>();
-            int dem = 0;
+        //public List<ProductDTO> getParentCategory()
+        //{
+        //    var lst_id = db.ParentCategories.Select(x => x.ID).ToArray();
+        //    var lst_pro = new List<ProductDTO>();
+        //    var lst_parent = new List<long>();
+        //    int dem = 0;
 
-            var random = new Random();
-            while (true)
-            {
-                if (dem == 2)
-                    break;
-                long index = random.Next(lst_id.Length - 1);
-                var parent = new ProductDTO();
-                var parent_id = lst_id[index];
-                parent.ParentCategorys = db.ParentCategories.Find(parent_id);
-                parent.LstProducts = db.Products.Where(x => x.Category.ParentCategory_ID == parent_id).ToList();
-                //parent.ParentCategory_ID = lst_id[index];
-                lst_pro.Add(parent);
-                lst_id[index] = lst_id[index + 1];
-                dem++;
+        //    var random = new Random();
+        //    while (true)
+        //    {
+        //        if (dem == 2)
+        //            break;
+        //        long index = random.Next(lst_id.Length - 1);
+        //        var parent = new ProductDTO();
+        //        var parent_id = lst_id[index];
+        //        parent.ParentCategorys = db.ParentCategories.Find(parent_id);
+        //        parent.LstProducts = db.Products.Where(x => x.Category.ParentCategory_ID == parent_id).ToList();
+        //        //parent.ParentCategory_ID = lst_id[index];
+        //        lst_pro.Add(parent);
+        //        lst_id[index] = lst_id[index + 1];
+        //        dem++;
 
-            }
+        //    }
 
-            return lst_pro;
-        }
+        //    return lst_pro;
+        //}
 
         //Lấy danh mục sp ngẫu nhiên
-        public List<ParentCategory> getRandomParent()
-        {
-            var lst_id = db.ParentCategories.Select(x => x.ID).ToArray();
-            var lst_parent = new List<ParentCategory>();
+        //public List<ParentCategory> getRandomParent()
+        //{
+        //    var lst_id = db.ParentCategories.Select(x => x.ID).ToArray();
+        //    var lst_parent = new List<ParentCategory>();
            
-            int dem = 0;
-            var random = new Random();
-            while (true)
-            {
-                if (dem == 3)
-                    break;
-                long index = random.Next(lst_id.Length - 1);
-                var parent = new ParentCategory();
-                var parent_id = lst_id[index];
+        //    int dem = 0;
+        //    var random = new Random();
+        //    while (true)
+        //    {
+        //        if (dem == 3)
+        //            break;
+        //        long index = random.Next(lst_id.Length - 1);
+        //        var parent = new ParentCategory();
+        //        var parent_id = lst_id[index];
 
-                parent = db.ParentCategories.Find(parent_id);
-                lst_parent.Add(parent);
-                lst_id[index] = lst_id[index + 1];
-                dem++;
+        //        parent = db.ParentCategories.Find(parent_id);
+        //        lst_parent.Add(parent);
+        //        lst_id[index] = lst_id[index + 1];
+        //        dem++;
 
-            }
+        //    }
 
-            return lst_parent;
-        }
-        //Chi tiết sản phẩm
-        public ProductDTO getProductDetail(long ID)
-        {
-            var query = from pro in db.Products
-                        join cet in db.Categories on pro.Category_ID equals cet.ID
-                        select new ProductDTO()
-                        {
-                            ID = pro.ID,
-                            Product_Name = pro.Product_Name,
-                            Product_Code = pro.Product_Code,
-                            Metatitle = pro.Metatitle.Trim(),
-                            Object = pro.Object,
-                            Promotion_Price = pro.Promotion_Price,
-                            Price = pro.Price,
-                            Image = pro.Image,
-                            Desription = pro.Desription,
-                            Configuration = pro.Configuration,
-                            Category_Name = cet.Name,
-                            Category_ID = pro.Category_ID
-                        };
-            return query.Single(x => x.ID == ID);
-        }
+        //    return lst_parent;
+        //}
+        ////Chi tiết sản phẩm
+        //public ProductDTO getProductDetail(long ID)
+        //{
+        //    var query = from pro in db.Products
+        //                join cet in db.Categories on pro.Category_ID equals cet.ID
+        //                select new ProductDTO()
+        //                {
+        //                    ID = pro.ID,
+        //                    Product_Name = pro.Product_Name,
+        //                    Product_Code = pro.Product_Code,
+        //                    Metatitle = pro.Metatitle.Trim(),
+        //                    Object = pro.Object,
+        //                    Promotion_Price = pro.Promotion_Price,
+        //                    Price = pro.Price,
+        //                    Image = pro.Image,
+        //                    Desription = pro.Desription,
+        //                    Configuration = pro.Configuration,
+        //                    Category_Name = cet.Name,
+        //                    Category_ID = pro.Category_ID
+        //                };
+        //    return query.Single(x => x.ID == ID);
+        //}
 
 
         //Lấy sản phẩm cùng loại
@@ -220,21 +221,21 @@ namespace Watch.Models.Business
             
         }
 
-        public IEnumerable<Product> getProductByCategory(long? category_id, int page, int pagesize, string order = null)
-        {
-            if (order != null)
-            {
-                if (order == "asc")
-                    return db.Products.Where(x => x.Category_ID == category_id && x.Status == true).OrderBy(x => x.Promotion_Price).ToPagedList(page, pagesize);
-                else
-                    return db.Products.Where(x => x.Category_ID == category_id && x.Status == true).OrderByDescending(x => x.Promotion_Price).ToPagedList(page, pagesize);
-            }
-            else
-            {
-                return db.Products.Where(x => x.Category_ID == category_id && x.Status == true).OrderByDescending(x => x.Product_Name).ToPagedList(page, pagesize);
-            }
+        //public IEnumerable<Product> getProductByCategory(long? category_id, int page, int pagesize, string order = null)
+        //{
+        //    if (order != null)
+        //    {
+        //        if (order == "asc")
+        //            return db.Products.Where(x => x.Category_ID == category_id && x.Status == true).OrderBy(x => x.Promotion_Price).ToPagedList(page, pagesize);
+        //        else
+        //            return db.Products.Where(x => x.Category_ID == category_id && x.Status == true).OrderByDescending(x => x.Promotion_Price).ToPagedList(page, pagesize);
+        //    }
+        //    else
+        //    {
+        //        return db.Products.Where(x => x.Category_ID == category_id && x.Status == true).OrderByDescending(x => x.Product_Name).ToPagedList(page, pagesize);
+        //    }
 
-        }
+        //}
 
         //thêm review sản phẩm
         public bool addReview(Review entity)
@@ -252,84 +253,24 @@ namespace Watch.Models.Business
         }
 
         //lấy review sản phẩm
-        public List<ReviewDTO> getReview(long product_id)
-        {
-            var query = from rev in db.Reviews
-                        join pro in db.Products on rev.Product_ID equals pro.ID
-                        join user in db.Users on rev.User_ID equals user.ID
-                        where rev.Product_ID == product_id
-                        select new ReviewDTO()
-                        {
-                            ID = rev.ID,
-                            Content = rev.Content,
-                            Rating = rev.Rating,
-                            Fullname = user.Fullname,
-                            CreatedDate = rev.CreatedDate
-                        };
-            return query.OrderByDescending(x => x.CreatedDate).ToList();
-        }
+        //public List<ReviewDTO> getReview(long product_id)
+        //{
+        //    var query = from rev in db.Reviews
+        //                join pro in db.Products on rev.Product_ID equals pro.ID
+        //                join user in db.Users on rev.User_ID equals user.ID
+        //                where rev.Product_ID == product_id
+        //                select new ReviewDTO()
+        //                {
+        //                    ID = rev.ID,
+        //                    Content = rev.Content,
+        //                    Rating = rev.Rating,
+        //                    Fullname = user.Fullname,
+        //                    CreatedDate = rev.CreatedDate
+        //                };
+        //    return query.OrderByDescending(x => x.CreatedDate).ToList();
+        //}
 
 
-        public List<Product> GetProducts_Recomment(long ID)
-        {
-            int Support = 2;
-            //Khởi tạo luật kết hợp Rule: VD: A => C,B
-            List<AssociationRule> rules = new List<AssociationRule>();
-            List<AssociationRule> lstLabel = new List<AssociationRule>();
-            Apriori apriori = new Apriori(ID); //Load file và Thu gọn các item
-            int k = 1; //Tập phổ biến K-Item
-            List<ItemSet> ItemSets = new List<ItemSet>(); //Khởi tạo List item 
-            bool next;
-            do
-            {
-                next = false;
-                //IsFirstItemList: k == 1 : if(k == 1) IsFirstItemList = True
-                //                          else IsFirstItemList = False
-                var L = apriori.GetItemSet(k, Support, IsFirstItemList: k == 1); //Lấy tập ứng viên sau khi đã kết hợp và so sánh với độ phổ biến support
-                if (L.Count > 0)
-                {
-                    
-                    if (k != 1)
-                        rules = apriori.GetRules(L); //Các luật kết hợp và tính toán độ tin cậy
-                    foreach (var item in rules)
-                        lstLabel.Add(item);
-                    next = true;
-                    k++;
-                    ItemSets.Add(L);
-                }
-            } while (next);
-
-            string label = "";
-            foreach (var item in lstLabel)
-            {
-                if(item.Confidance >= 50)
-                {
-                   label += item.Label.Replace("=>", " ").Replace(",", " ");
-                }
-
-                if (label.Contains(ID.ToString()))
-                {
-                    label = label.Replace(ID.ToString(), " ");
-                }
-            }
-
-            List<Product> data = new List<Product>();
-
-            var row = label.Split(' ').ToList();
-            foreach (var item in row)
-            {
-                var product = new Product();
-                if(item != ""){
-                    product = db.Products.Find(long.Parse(item.Trim()));
-                    if (!data.Exists(x => x == product))
-                    {
-                        data.Add(product);
-                    }
-                }
-                
-            }
-
-            return data;
-        }
+        
     }
 }

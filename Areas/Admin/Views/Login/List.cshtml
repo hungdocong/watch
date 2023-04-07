@@ -49,17 +49,9 @@
                     <div class="modal-body">
                         @using (Html.BeginForm("frmAdd", "Login", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmAdd" }))
                         {
-                            <div class="form-group col-sm-12">
+                            <div class="form-group col-sm-6">
                                 <label for="recipient-name" class="col-form-label">Họ và tên:</label>
                                 <input type="text" name="Fullname" class="form-control" required>
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label for="recipient-name" class="col-form-label">Tên đăng nhập:</label>
-                                <input type="text" name="Account" class="form-control" required>
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label for="recipient-name" class="col-form-label">Mật khẩu:</label>
-                                <input type="password" name="Password" class="form-control" required>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="recipient-name" class="col-form-label">Quyền:</label>
@@ -70,6 +62,15 @@
                                     }
                                 </select>
                             </div>
+                            <div class="form-group col-sm-6">
+                                <label for="recipient-name" class="col-form-label">Tên đăng nhập:</label>
+                                <input type="text" name="Account" class="form-control" required>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="recipient-name" class="col-form-label">Mật khẩu:</label>
+                                <input type="password" name="Password" class="form-control" required>
+                            </div>
+
                             <div class="form-group col-sm-12">
                                 <label for="recipient-name" class="col-form-label">Hình ảnh:</label>
                                 <label for="imgInp" class="custom-file-upload">
@@ -79,7 +80,7 @@
                                 <img id="blah" src="~/Assets/Client/img/empty.jpg" alt="your image" width="100px" />
                             </div>
 
-                            <div class="form-group text-center">
+                            <div class="form-group text-center col-sm-12">
                                 <button type="submit" class="btn btn-primary btn-lg">Thêm mới</button>
                             </div>
                         }
@@ -101,8 +102,8 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center">Tên truy cập</th>
                                     <th class="text-center" colspan="2">Thông tin</th>
+                                    <th class="text-center">Tên truy cập</th>
                                     <th class="text-center">Quyền truy cập</th>
                                     <th class="text-center">Trạng thái</th>
                                     <th></th>
@@ -111,33 +112,33 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td class="text-center">@dem</td>
-                                        <td class="text-center">@item.Account</td>
-                                        <td><img src="~/Assets/Client/img/admin/@item.Image" width="100px" /></td>
-                                        <td class="text-center">@item.Fullname</td>
-                                        <td class="text-center">
-                                            <select class="form-control changeRole" data-id="@item.ID">
-                                                @foreach (var jtem in lstPhanQuyen)
-                                                {
-                                                    <option value="@(jtem.RoleID == item.RoleID ? "selected" : "")">@jtem.RoleName</option>
-                                                }
-                                            </select>
-                                        </td>
-                                        <td class="text-center">
-                                                @if (item.Status == true)
-                                                {
-                                                    <button class="btn btn-primary btnStatus" data-id="@item.ID" title="Khóa tài khoản">Đang hoạt động</button>
-                                                }
-                                                else
-                                                {
-                                                    <button class="btn btn-default btnStatus" data-id="@item.ID" title="Kích hoạt tài khoản">Đã khóa</button>
-                                                }
-                                            </td>
-                                        <td>
-                                            <button class="btn btn-danger btnDelete" data-id="@item.ID" title="Xóa truy cập"><i class="fa fa-remove"></i></button>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td class="text-center">@dem</td>
+                                    <td><img src="~/Assets/Client/img/admin/@item.Image" width="100px" /></td>
+                                    <td class="text-center">@item.Fullname</td>
+                                    <td class="text-center">@item.Account</td>
+                                    <td class="text-center">
+                                        <select class="form-control changeRole" data-id="@item.ID">
+                                            @foreach (var jtem in lstPhanQuyen)
+                                            {
+                                                <option value="@jtem.RoleID" @(jtem.RoleID == item.RoleID ? "selected" : "")>@jtem.Detail</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td class="text-center">
+                                        @if (item.Status == true)
+                                        {
+                                            <button class="btn btn-primary btnStatus" data-id="@item.ID" title="Khóa tài khoản">Đang hoạt động</button>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-default btnStatus" data-id="@item.ID" title="Kích hoạt tài khoản">Đã khóa</button>
+                                        }
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btnDelete" data-id="@item.ID" title="Xóa truy cập"><i class="fa fa-remove"></i></button>
+                                    </td>
+                                </tr>
                                     dem++;
                                 }
 

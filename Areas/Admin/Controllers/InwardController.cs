@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Computers.Models.DTO;
 
-namespace Computers.Areas.Admin.Controllers
+namespace Watch.Areas.Admin.Controllers
 {
     public class InwardController : Controller
     {
         private WatchEntities db = new WatchEntities();
         // GET: Seller/Inward
+        [CustomRoleProvider(RoleName = new string[] { "Staff", "Admin" })]
         public ActionResult Index()
         {
             var model = db.Inwards.OrderByDescending(x => x.Createdate).ToList();
@@ -22,6 +22,7 @@ namespace Computers.Areas.Admin.Controllers
             return View(model);
         }
 
+        [CustomRoleProvider(RoleName = new string[] { "Staff", "Admin" })]
         public ActionResult Add()
         {
             ViewBag.lstproduct = db.Products.OrderByDescending(x => x.Product_Name).ToList();
@@ -58,15 +59,15 @@ namespace Computers.Areas.Admin.Controllers
                     new ProductBusiness().AddQuantity(item.Product.ID, item.Quantity);
                 }
                 Session["add_order"] = null;
-                TempData["add_success"] = "Nhập kho thành công.";
+                TempData["message"] = "Nhập kho thành công.";
                 TempData["alert"] = "alert-success";
-                return RedirectToAction("Index");
+                return Redirect("/admin/inward");
             }
             else
             {
                 TempData["alert"] = "alert-danger";
-                TempData["add_success"] = "Nhập kho KHÔNG thành công.";
-                return RedirectToAction("Add");
+                TempData["message"] = "Nhập kho KHÔNG thành công.";
+                return Redirect("admin/inward/add");
             }
         }
 

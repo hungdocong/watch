@@ -1,10 +1,10 @@
-﻿using Computers.Models.Entities;
+﻿using Watch.Models.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Computers.Models.DTO
+namespace Watch.Models.DTO
 {
     public class CartDTO
     {

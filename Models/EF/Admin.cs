@@ -25,9 +25,9 @@ namespace Watch.Models.EF
         public string Password { get; set; }
         public string Fullname { get; set; }
         public Nullable<long> RoleID { get; set; }
+        public string Image { get; set; }
         public Nullable<System.DateTime> LastLogin { get; set; }
         public Nullable<bool> Status { get; set; }
-        public string Image { get; set; }
     
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

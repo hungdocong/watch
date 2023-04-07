@@ -6,13 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Watch.Models.Business;
 
-namespace Computers.Areas.Admin.Controllers
+namespace Watch.Areas.Admin.Controllers
 {
     public class UserController : Controller
     {
         private WatchEntities db = new WatchEntities();
         // GET: Admin/User
+        [CustomRoleProvider(RoleName = new string[] { "Collaborators", "Admin" })]
         public ActionResult Index()
         {
             var lstOrder = db.Orders.ToList();

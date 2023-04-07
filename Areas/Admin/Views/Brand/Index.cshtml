@@ -47,7 +47,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        @using (Html.BeginForm("frmAdd", "Brand", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        @using (Html.BeginForm("add", "Brand", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Tên thương hiệu:</label>
@@ -79,7 +79,7 @@
                         <h3 class="box-title"></h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <table id="tblData" class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
@@ -124,7 +124,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("frmEdit", "Brand", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("edit", "Brand", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <input type="hidden" name="ID" id="ID" />
                     <div class="form-group col-sm-12">
@@ -182,7 +182,7 @@
                 $(this).prev('label').append(file);
             });
 
-            $("#tblData").DataTable();
+            
             //nếu không có thao tác gì thì ẩn đi
             $('#AlertBox').removeClass('hide');
 
@@ -267,6 +267,8 @@
                     }
                 });
             });
+
+            $("#tblData").DataTable();
         });
 
     </script>

@@ -1705,7 +1705,7 @@ a:focus {
     top: -10px;
     right: 10px;
     z-index: 0;
-    font-size: 90px;
+    font-size: 66px;
     color: rgba(0, 0, 0, 0.15)
 }
 
@@ -4896,8 +4896,8 @@ table.text-center th {
 }
 
     .box-image img {
-        width: 100px;
-        height: 100px;
+        width: 150px;
+        /*height: 100px;*/
     }
 
 .wrap-btn-delete {
@@ -4925,3 +4925,21 @@ label.btn-image {
     padding: 10px;
     margin-left: 10px;
 }
+
+
+.list_images {
+    /* width: 50%; */
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.box_image {
+    position: relative;
+    float: left;
+    margin-left: 5px;
+}
+
+    .box_image img {
+        width: auto;
+        height: 200px;
+    }

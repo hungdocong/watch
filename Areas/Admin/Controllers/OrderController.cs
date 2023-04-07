@@ -7,13 +7,14 @@ using System.Web;
 using System.Web.Mvc;
 using Watch.Models.Business;
 
-namespace Computers.Areas.Admin.Controllers
+namespace Watch.Areas.Admin.Controllers
 {
     public class OrderController : Controller
     {
         private WatchEntities db = new WatchEntities();
         // GET: Admin/Order
         //Đơn đã thanh toán
+        [CustomRoleProvider(RoleName = new string[] { "Staff", "Admin" })]
         public ActionResult Index()
         {
             var model = db.Orders.Where(x => x.Status == 3 || x.Payment == 1).OrderByDescending(x => x.CreatedDate).ToList();
@@ -21,6 +22,7 @@ namespace Computers.Areas.Admin.Controllers
         }
 
         //Đơn chờ xác nhận/đơn hàng mới
+        [CustomRoleProvider(RoleName = new string[] { "Staff", "Admin" })]
         public ActionResult WaitAccept(int page = 1, int pagesize = 10)
         {
             var model = db.Orders.Where(x => x.Status == 1).OrderByDescending(x => x.CreatedDate).ToList();
@@ -28,6 +30,7 @@ namespace Computers.Areas.Admin.Controllers
         }
 
         //Đơn bị hủy
+        [CustomRoleProvider(RoleName = new string[] { "Staff", "Admin" })]
         public ActionResult CancerOrder(int page = 1, int pagesize = 10)
         {
             var model = db.Orders.Where(x => x.Status == 0 || x.Status == -1).OrderByDescending(x => x.CreatedDate).ToList();
@@ -35,12 +38,14 @@ namespace Computers.Areas.Admin.Controllers
         }
 
         //Đơn đang vận chuyển
+        [CustomRoleProvider(RoleName = new string[] { "Staff", "Admin" })]
         public ActionResult OrderDelivering(int page = 1, int pagesize = 10)
         {
             var model = db.Orders.Where(x => x.Status == 2).OrderByDescending(x => x.CreatedDate).ToList();
             return View(model);
         }
 
+        [CustomRoleProvider(RoleName = new string[] { "Staff", "Admin" })]
         public ActionResult Order_Detail(long ID)
         {
             var query = db.Order_Detail.Where(x => x.Order_ID == ID).OrderByDescending(x => x.ID).ToList();
